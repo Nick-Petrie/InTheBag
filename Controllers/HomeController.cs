@@ -63,17 +63,37 @@ namespace InTheBag.Controllers
             HttpContext.Session.SetString("wish", jsonWishes);
             return View();
         }
+        [HttpGet]
         public IActionResult NewWishIndex()
         {
             return View();
         }
+        /*  [HttpPost]
+          public IActionResult NewWishIndex(Wishes model)
+          {
+              Wishes myWishes = new Wishes { ID = 2, Wish1 = model.Wish1, Wish2 = model.Wish2, Wish3 = model.Wish3 };
+              string jsonWishes = JsonSerializer.Serialize(myWishes);
+              HttpContext.Session.SetString("wish", jsonWishes);
+              return View("WishIndex");
+          }*/
         [HttpPost]
         public IActionResult NewWishIndex(Wishes model)
         {
-            Wishes myWishes = new Wishes { ID = 2, Wish1 = model.Wish1, Wish2 = model.Wish2, Wish3 = model.Wish3 };
+            string wish1 = Request.Form["Wish1"];
+            string wish2 = Request.Form["Wish2"];
+            string wish3 = Request.Form["Wish3"];
+
+            Wishes myWishes = new Wishes
+            {
+                ID = 2,
+                Wish1 = wish1,
+                Wish2 = wish2,
+                Wish3 = wish3
+            };
             string jsonWishes = JsonSerializer.Serialize(myWishes);
             HttpContext.Session.SetString("wish", jsonWishes);
             return View("WishIndex");
+
         }
     }
 }
